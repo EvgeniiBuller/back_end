@@ -1,0 +1,9 @@
+
+
+
+    String nameToCheck = "Lena";
+System.out.println("Длина строки: " + nameToCheck.length());
+for (int i = 0; i < nameToCheck.length(); i++) {
+        char c = nameToCheck.charAt(i);
+        System.out.println("Символ [" + i + "]: " + c + ", Код: " + (int) c);
+    }
