@@ -1,4 +1,7 @@
 public class MyRunnable implements Runnable {
+    // "второй" вариант создания потока
+    //  1. реализуем Runnable
+    //  2: создаем new Thread(runnable)
 
     @Override
     public void run() {

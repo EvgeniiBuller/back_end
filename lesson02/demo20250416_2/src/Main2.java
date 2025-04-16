@@ -5,6 +5,7 @@ public class Main2 {
         System.out.println("---- start main ");
 
         thread1.start();
+        //thread1.join(); //пока первый не закончиться следующий не начнётся
         thread2.start();
 
         try {
@@ -14,8 +15,7 @@ public class Main2 {
             throw new RuntimeException(e);
         }
 
+        // любой код main
         System.out.println("---- finish main ");
     }
-
-
 }

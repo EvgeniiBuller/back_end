@@ -2,13 +2,12 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 
         String name = Thread.currentThread().getName();
-        System.out.println(name);
         long id = Thread.currentThread().getId();
         System.out.println(Thread.currentThread().getId());
         System.out.println(name + " " + id + " START");
 
-
-        Thread thread1 = new Thread() {
+        // создание Thread через анонимный класс
+        Thread thread1 = new Thread() {// Main$01 extends Thread
             @Override
             public void run() {
                 System.out.println(Thread.currentThread().getName() + " START анонимный класс");
@@ -28,9 +27,13 @@ public class Main {
         for (Thread thread : threads) {
             thread.start();
         }
-        for (Thread thread : threads) {
+        threads[threads.length-1].join();
+        /*
+        for (Thread thread:threads){
             thread.join();
         }
+
+         */
 
         Thread.sleep(500);
         System.out.println(name + " " + id + " FINISH");
