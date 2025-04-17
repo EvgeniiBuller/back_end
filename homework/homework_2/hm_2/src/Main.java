@@ -4,6 +4,8 @@ public class Main {
         FirstThread thread1 = new FirstThread();
         SecondThread thread2 = new SecondThread();
 
+        thread1.setDaemon(true);
+        thread2.setDaemon(true);
 
         thread1.start();
         thread2.start();
@@ -12,9 +14,7 @@ public class Main {
         Thread.sleep(3000);
 
 
-        System.out.println("Главный поток проснулся и прерывает другие потоки...");
-        thread1.interrupt();
-        thread2.interrupt();
+
 
         System.out.println("Главный поток завершил работу.");
     }
