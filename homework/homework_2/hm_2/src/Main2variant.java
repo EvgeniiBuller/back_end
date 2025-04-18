@@ -6,7 +6,7 @@ Main должен запускать оба эти потока, засыпат�
 
  */
 
-public class Main {
+public class Main2variant {
     public static void main(String[] args) {
         Thread task2 = new Task2variant(2,2);
         Thread task3 = new Task2variant(3,3);
