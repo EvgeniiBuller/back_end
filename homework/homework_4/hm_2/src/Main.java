@@ -1,27 +1,11 @@
 public class Main {
+
     public static void main(String[] args) throws InterruptedException {
-        Account accountA = new Account("DE1111", "Jack", 1000);
-        Account accountB = new Account("DE2222", "John", 1000);
+        Account accountA = new Account("DE1111","Jack", 1000);
+        Account accountB = new Account("DE2222","John", 1000);
 
-        Thread thread1 = new Thread(() -> {
-            try {
-                accountA.withdraw(100);
-                accountB.deposit(100);
-            } catch (IllegalArgumentException e) {
-                System.err.println("Ошибка в потоке T1: " + e.getMessage());
-            }
-        }, "T1");
-
-
-
-        Thread thread2 = new Thread(() -> {
-            try {
-                accountB.withdraw(500);
-                accountA.deposit(500);
-            } catch (IllegalArgumentException e) {
-                System.err.println("Ошибка в потоке T2: " + e.getMessage());
-            }
-        }, "T2");
+        Thread thread1 = new Thread(() -> transfer(accountA, accountB, 100), "T1");
+        Thread thread2 = new Thread(() -> transfer(accountB, accountA, 500), "T2");
 
         thread1.start();
         thread2.start();
@@ -33,4 +17,22 @@ public class Main {
         System.out.println(accountB);
 
     }
+
+    public static void transfer(Account from, Account to, double amount){
+
+        synchronized (from) {
+            System.out.println("account " + from + " is locked by " + Thread.currentThread().getName());
+
+            synchronized (to) {
+                System.out.println("account " + to + " is locked by" + Thread.currentThread().getName());
+                from.withdraw(amount);
+                to.deposit(amount);
+            }
+            System.out.println("account " + to + " is unlocked");
+        }
+        System.out.println("account " + from + " is unlocked");
+        System.out.println("transfer is finish");
+    }
+
 }
+
