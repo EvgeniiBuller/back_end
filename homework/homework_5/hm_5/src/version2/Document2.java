@@ -1,4 +1,9 @@
+package version2;
+
+//package deadlock_free;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 class Document {
@@ -20,16 +25,26 @@ class Document {
     }
 
     public void edit() {
-        synchronized (this) {
+        List<Document> listForSort = new ArrayList<>(relatedDocs);
+        listForSort.add(this);
+        listForSort.sort(Comparator.comparingInt(Document::getId));
+        lockByOrder(listForSort, 0);
+    }
+
+    private void lockByOrder(List<Document> document, int i) {
+        if (i == document.size()) {
             System.out.println(Thread.currentThread().getName() + " редактирует " + name);
             for (Document doc : relatedDocs) {
-                synchronized (doc) {
-                    System.out.println(Thread.currentThread().getName() + " редактирует связанный документ " + doc.name);
-                    // имитация редактирования
-                }
+                System.out.println(Thread.currentThread().getName() + " редактирует связанный документ " + doc.name);
             }
+            return;
+        }
+
+        synchronized (document.get(i)) {
+            lockByOrder(document, i + 1);
         }
     }
+
 
     public String getName() {
         return name;
@@ -39,5 +54,4 @@ class Document {
         return relatedDocs;
     }
 }
-
 

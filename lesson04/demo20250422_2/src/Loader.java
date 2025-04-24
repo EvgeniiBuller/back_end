@@ -3,20 +3,18 @@ public class Loader implements Runnable{
     private String name;
     private int nBox;
     private int capacity;
-    private Warehouse warehouse;
+    public Warehouse warehouse;
     private int done = 0;
     private static String winner = null;
     private final static Object lock = new Object();
 
 
-
     public Loader(String name, int nBox, int capacity, Warehouse warehouse) {
         this.name = name;
-        this.nBox = nBox;
-        this.capacity = capacity;
         this.warehouse = warehouse;
+        this.capacity = capacity;
+        this.nBox = nBox;
     }
-
 
     public static String getWinner(){
         return winner;
@@ -27,7 +25,7 @@ public class Loader implements Runnable{
         while (done<nBox){
             int value = Math.min(nBox-done,capacity);
             warehouse.addValue(value);
-            done+=capacity;
+            done+=value;
         }
         synchronized (lock) {
             if (winner == null) {
@@ -37,4 +35,3 @@ public class Loader implements Runnable{
         System.out.println(name + " finish. Get: " + done + " boxes");
     }
 }
-
