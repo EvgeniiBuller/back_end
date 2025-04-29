@@ -1,10 +1,12 @@
 package com.ait;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
@@ -34,8 +36,11 @@ public class Main {
 //-----------------------------------------------------------------------------------
         // прочитать JSON -> в обхект
         Person person = mapper.readValue(new File("p1.json"), Person.class);
-        Person[] people1 = mapper.readValue(new File("p2.json"), Person[].class);
+        //Person[] people1 = mapper.readValue(new File("p2.json"), Person[].class);
+        ArrayList<Person> people1 = mapper.readValue(new File("p2.json"), new TypeReference<ArrayList<Person>>() {
+        });
         System.out.println("perso:" + person);
-        System.out.println(Arrays.toString(people1));
+        //System.out.println(Arrays.toString(people1));
+        System.out.println(people1);
     }
 }
