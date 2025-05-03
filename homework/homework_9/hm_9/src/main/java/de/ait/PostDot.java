@@ -9,11 +9,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
-
-public class PostDot {
-    private int id;
+public class PostDto {
     private int userId;
-    private String name;
-    private String email;
-    private String body;
+    private int id;
+    private String title;
+    //  private String body;
 }
