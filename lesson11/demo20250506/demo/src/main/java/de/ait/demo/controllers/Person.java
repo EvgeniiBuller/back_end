@@ -17,4 +17,11 @@ public class Person {
         return age;
     }
 
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }
