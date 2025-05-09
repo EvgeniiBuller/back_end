@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.awt.print.Book;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,7 +17,8 @@ public class ThingsRestController {
     @RequestMapping(value = "/books", method = RequestMethod.GET)
     public List<Book> getBooks() {
         List<Book> booksList = new ArrayList<>();
-        booksList.add(new Book());
+        booksList.add(new Book("Wetter", 1890));
+        booksList.add(new Book("Vater", 1990));
         return booksList;
     }
 
