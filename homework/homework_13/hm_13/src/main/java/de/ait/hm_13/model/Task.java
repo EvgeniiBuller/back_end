@@ -1,17 +1,16 @@
 package de.ait.hm_13.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @ToString
+@EqualsAndHashCode(of="id")
 
 public class Task {
+    @Setter
     private Long id;
     private String description;
-    private int priority;
+    private Priority priority;
 }
