@@ -12,15 +12,14 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-@AllArgsConstructor
+//@AllArgsConstructor
 public class ProgrammerRepositoryMapImpl implements ProgrammerRepository {
-    private final TaskRepository taskRepository = new TaskRepositoryMapImpl();
-
-
-
+    private final TaskRepository taskRepository;
     private static Long lastID = 3L;
     private static Map<Long, Programmer> map = new HashMap<>();
-    {
+
+    public ProgrammerRepositoryMapImpl(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
         map.put(1L, new Programmer(1L,"Jack") );
         map.put(2L, new Programmer(2L,"Nick") );
         map.put(3L, new Programmer(3L,"John") );
