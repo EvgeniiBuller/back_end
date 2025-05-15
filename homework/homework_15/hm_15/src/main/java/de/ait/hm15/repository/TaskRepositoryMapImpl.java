@@ -1,14 +1,11 @@
 package de.ait.hm15.repository;
 
+
+
 import de.ait.hm15.model.Priority;
 import de.ait.hm15.model.Task;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,10 +41,8 @@ public class TaskRepositoryMapImpl implements TaskRepository{
     }
 
     @Override
+    // return или значение Task или null
     public Task findById(Long id) {
-        if (id<1 || id>lastId){
-            throw new RuntimeException("id not found"); //IdNotFoundException
-        }
         return map.get(id);
     }
 
@@ -66,4 +61,7 @@ public class TaskRepositoryMapImpl implements TaskRepository{
 
 
 }
+
+
+
 

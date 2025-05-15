@@ -1,6 +1,7 @@
 package de.ait.hm15.controller;
 
 
+import de.ait.hm15.dto.ProgrammerResponseDto;
 import de.ait.hm15.model.Programmer;
 import de.ait.hm15.model.Task;
 import de.ait.hm15.repository.ProgrammerRepository;
@@ -20,29 +21,29 @@ import java.util.List;
 
 @AllArgsConstructor
 public class ProgrammerController {
-private final ProgrammerService service;
+
     private final ProgrammerRepository repository;
+    private final ProgrammerService service;
 
 
 
     @GetMapping("/programmers")
-    public ResponseEntity<List<Programmer> > getProgrammers(){
-        return ResponseEntity.ok(repository.findAll());
+    public List<ProgrammerResponseDto> getProgrammers(){
+        return service.getAllProgrammer();
     }
 
     @GetMapping("/programmers/{id}")
-    public ResponseEntity<Programmer> getProgrammerById(@PathVariable("id") Long id){
-        try {
-            return ResponseEntity.ok(repository.findById(id));
-        }catch (Exception e){
-        return ResponseEntity.notFound().build();
+    public Programmer getProgrammerById(@PathVariable("id") Long id){
+        return repository.findById(id);
     }
-}
+
+
+
 
     //получить список задач заданного программиста (GET programmers/id/tasks)
     @GetMapping("/programmers/{id}/tasks")
-    public List<Task> getTaskByProgrammer(@PathVariable("id") Long id){
-        return repository.findTasksByProgrammerId(id);
+    public ResponseEntity<List<Task>> getTaskByProgrammer(@PathVariable("id") Long id){
+        return ResponseEntity.ok(repository.findTasksByProgrammerId(id));
     }
 
     //поручить программисту задачу (PUT programmers/programmerId/tasks/taskId)
@@ -52,4 +53,7 @@ private final ProgrammerService service;
     }
 
 }
+
+
+
 

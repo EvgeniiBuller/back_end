@@ -1,25 +1,40 @@
 package de.ait.hm15.service;
 
+
+import de.ait.hm15.dto.ProgrammerRequestDto;
 import de.ait.hm15.dto.ProgrammerResponseDto;
 import de.ait.hm15.mappers.ProgrammerMapper;
-import de.ait.hm15.model.Programmer;
 import de.ait.hm15.repository.ProgrammerRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
+
 public class ProgrammerServiceImpl implements ProgrammerService {
     private final ProgrammerRepository repository;
     private final ProgrammerMapper mapper;
 
     @Override
-    public List<ProgrammerResponseDto> getAllProgrammers() {
-       return mapper.toResponseDtoList (repository.findAll());
+    public List<ProgrammerResponseDto> getAllProgrammer() {
+        return mapper.toResponseDtoList(repository.findAll());
     }
 
+    @Override
+    public ProgrammerResponseDto getProgrammerById(Long id) {
+        return null;
+    }
+
+    @Override
+    public ProgrammerResponseDto createTask(ProgrammerRequestDto taskRequestDto) {
+        return null;
+    }
+
+    @Override
+    public ProgrammerResponseDto deleteTask(Long id) {
+        return null;
+    }
 }
+

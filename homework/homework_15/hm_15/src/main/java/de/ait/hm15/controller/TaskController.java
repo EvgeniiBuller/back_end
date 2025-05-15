@@ -1,6 +1,5 @@
 package de.ait.hm15.controller;
 
-
 /*
 получить список всех задач
 получить задачу по id
@@ -8,6 +7,7 @@ package de.ait.hm15.controller;
 удалить задачу № ...
  */
 
+import de.ait.hm15.dto.TaskRequestDto;
 import de.ait.hm15.dto.TaskResponseDto;
 import de.ait.hm15.model.Task;
 import de.ait.hm15.repository.TaskRepository;
@@ -20,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -50,51 +51,47 @@ public class TaskController {
 
     @GetMapping("/tasks")
     public ResponseEntity< List<TaskResponseDto> > getTasks(){
-        //return ResponseEntity.ok(service.getAllTasks());
-
-        List<TaskResponseDto> allTasks = service.getAllTasks();
-        HttpHeaders headers = new HttpHeaders(); // заголовки HTTP
-        headers.add("X-Task-Size", String.valueOf(allTasks.size()));
-        headers.add("X-Task-Hello", "hello from server");
-        return new ResponseEntity<>(allTasks,headers, HttpStatus.OK);
+        return ResponseEntity.ok(service.getAllTasks());
     }
 
-
+    // если ok то 200OK и TaskResponseDto   иначе  404NotFound
     @GetMapping("/tasks/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable("id") Long taskId){
-        try {
-            return ResponseEntity.ok(repository.findById(taskId));
-        } catch (Exception e){
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<TaskResponseDto> getTaskById(@PathVariable("id") Long taskId){
+        TaskResponseDto taskById = service.getTaskById(taskId);
+        //return (taskById!=null)? ResponseEntity.ok(taskById) : ResponseEntity.notFound().build();
+
+        return ResponseEntity.ofNullable(taskById);
     }
+
 
     @PostMapping("/tasks")
-    public ResponseEntity<Task> createNewTask(@RequestBody Task task, UriComponentsBuilder uriBuilder){
-        Task saveed = repository.save(task);
-        /*
-        try {
-            return ResponseEntity.created(new URI("http://localhost:8081/tasks/"+saveed.getId())).body(saveed);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-        */
-        // возвращаем статус 201 Created + header Location с адресом ресурса
-        ResponseEntity<Task> entity
-                = ResponseEntity
-                .created(UriComponentsBuilder.fromPath("/tasks/{id}")
-                        .buildAndExpand(saveed.getId())
-                        .toUri())
-                .body(saveed);
-        return entity;
+    public ResponseEntity<TaskResponseDto> createNewTask(@RequestBody TaskRequestDto task){
+        TaskResponseDto savedTask = service.createTask(task);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedTask.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(savedTask);
+/*
+        return  ResponseEntity
+                .status(HttpStatus.CREATED)
+                //.header("location", location.toString())
+                .body(savedTask);
+*/
+
     }
+
+    /*
+    A successful response SHOULD be 200 (OK) if the response includes an entity
+    describing the status, 202 (Accepted) if the action has not yet been enacted,
+    or 204 (No Content) if the action has been enacted but the response
+    does not include an entity.
+     */
 
     @DeleteMapping("/tasks/{id}")
-    public  Task deleteTaskById(@PathVariable("id") Long id){
-        return repository.delete(id);
+    public  ResponseEntity<TaskResponseDto> deleteTaskById(@PathVariable("id") Long id){
+        TaskResponseDto deletedTask = service.deleteTask(id);
+        return ResponseEntity.ofNullable(deletedTask);
     }
-
-
-
-
 }

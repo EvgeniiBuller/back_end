@@ -1,7 +1,5 @@
 package de.ait.hm15.model;
 
-
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +12,8 @@ import java.util.Set;
 
 @NoArgsConstructor
 @Getter
+@Setter
 public class Programmer {
-    @Setter
     private Long id;
     private String name;
     private Set<Task> tasks;
@@ -34,4 +32,5 @@ public class Programmer {
     }
 
 }
+
 
