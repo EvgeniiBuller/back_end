@@ -22,9 +22,4 @@ public class ProgrammerServiceImpl implements ProgrammerService {
        return mapper.toResponseDtoList (repository.findAll());
     }
 
-    private static ProgrammerResponseDto getProgrammerResponseDto(Programmer p) {
-        return   new ProgrammerResponseDto(p.getId(), p.getName(), Set.copyOf());
-
-    }
-
 }
