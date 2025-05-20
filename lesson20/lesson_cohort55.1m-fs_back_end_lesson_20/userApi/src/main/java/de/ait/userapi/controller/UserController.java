@@ -9,13 +9,12 @@ import de.ait.userapi.repository.UserRepository;
 import de.ait.userapi.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
@@ -56,7 +55,7 @@ public class UserController {
 
     @PostMapping("/users")
     public UserResponseDto addUser(@RequestBody UserRequestDto dto){
-        logger.info(dto);
+        logger.debug(dto);
         return service.addUser(dto);
     }
 
